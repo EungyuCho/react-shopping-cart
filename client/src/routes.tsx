@@ -15,3 +15,5 @@ const CleanCodeRouter = () => {
     </Routes>
   )
 }
+
+export default CleanCodeRouter

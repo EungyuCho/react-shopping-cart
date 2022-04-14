@@ -23,9 +23,11 @@
   },
   "include": ["src"],
   "paths": {
-    "pages/*": ["pages/*"],
-    "components/*": ["components/*"],
-    "constants/*": ["constants/*"],
-    "hooks/*": ["hooks/*"]
+    "@/*": ["./src/*"]
+    // "@pages/*": ["pages/*"],
+    // "@components/*": ["components/*"],
+    // "@constants/*": ["constants/*"],
+    // "@hooks/*": ["hooks/*"],
+    // "@core/*": ["core/*"]
   }
 }

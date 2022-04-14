@@ -2,10 +2,8 @@ import Nav from 'components/Nav'
 import normalize from 'emotion-normalize'
 import { css, Global } from '@emotion/react'
 import { ReactNode } from 'react'
-import { HashRouter, Route, Routes } from 'react-router-dom'
-import Cart from 'pages/Cart'
-import OrderList from 'pages/OrderList'
-import ProductList from 'pages/ProductList'
+import { HashRouter } from 'react-router-dom'
+import CleanCodeRouter from './routes'
 
 function Layout({ children }: { children: ReactNode }) {
   return (
@@ -31,12 +29,7 @@ export default function App() {
       />
       <Layout>
         <Nav />
-        <Routes>
-          <Route path="/" element={<ProductList />} />
-          <Route path="productList" element={<ProductList />} />
-          <Route path="cart" element={<Cart />} />
-          <Route path="orderList" element={<OrderList />} />
-        </Routes>
+        <CleanCodeRouter />
       </Layout>
     </HashRouter>
   )
