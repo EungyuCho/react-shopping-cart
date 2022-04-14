@@ -26,7 +26,7 @@ export default function App() {
         `}
       />
       <Layout>
-        <Nav>HMR이 동작하네요!</Nav>
+        <Nav />
       </Layout>
     </>
   )

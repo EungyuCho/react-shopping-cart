@@ -1,25 +1,54 @@
 import styled from '@emotion/styled'
+import colors from 'constants/colors'
 
-const Nav = styled.nav`
-  width: 100%;
-  height: 100%;
-  background: #2ac1bc;
-`
+const Nav = () => {
+  return (
+    <NavContainer>
+      <NavTitleContainer>
+        <NavTitle>CLEAN CODE SHOP</NavTitle>
+      </NavTitleContainer>
+      <NavButtonContainer>
+        <NavButton>장바구나</NavButton>
+        <NavButton>주문목록</NavButton>
+      </NavButtonContainer>
+    </NavContainer>
+  )
+}
 
 export default Nav
 
-/**
- * 
+const NavContainer = styled.nav`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: 80px;
+  background: ${colors.primary};
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 30%);
+`
 
-<nav class="nav flex justify-around">
-    <div class="flex-center">
-        <h1 class="nav-title">CLEAN CODE SHOP</h1>
-    </div>
-    <div class="flex gap-15">
-        <button class="nav-button">장바구니</button>
-        <button class="nav-button">주문목록</button>
-    </div>
-</nav>
+const NavTitleContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
+const NavButtonContainer = styled.div`
+  display: flex;
+  gap: 15px;
+`
 
- */
+const NavTitle = styled.h1`
+  font-size: 40px;
+  font-weight: 900;
+  text-align: center;
+  vertical-align: middle;
+  color: ${colors.white500};
+`
+
+const NavButton = styled.button`
+  all: unset;
+  display: revert;
+  color: ${colors.white500};
+  font-size: 24px;
+  font-weight: 500;
+`
