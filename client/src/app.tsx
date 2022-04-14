@@ -1,5 +1,33 @@
-import { render } from 'react-dom'
+import Nav from 'components/Nav'
+import normalize from 'emotion-normalize'
+import { css, Global } from '@emotion/react'
+import { ReactNode } from 'react'
 
-const App = () => <div>앱입니당</div>
+function Layout({ children }: { children: ReactNode }) {
+  return (
+    <div
+      css={css`
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+      `}
+    >
+      {children}
+    </div>
+  )
+}
 
-render(<App />, document.getElementById('root'))
+export default function App() {
+  return (
+    <>
+      <Global
+        styles={css`
+          ${normalize}
+        `}
+      />
+      <Layout>
+        <Nav>HMR이 동작하네요!</Nav>
+      </Layout>
+    </>
+  )
+}

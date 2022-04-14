@@ -23,8 +23,9 @@
   },
   "include": ["src"],
   "paths": {
-    "page/*": ["page/*"],
-    "component/*": ["component/*"],
-    "hook/*": ["hook/*"]
+    "pages/*": ["pages/*"],
+    "components/*": ["components/*"],
+    "constants/*": ["constants/*"],
+    "hooks/*": ["hooks/*"]
   }
 }
