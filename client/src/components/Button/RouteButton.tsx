@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
 import { NavigateOptions, useNavigate } from 'react-router-dom'
-import { NavigateRoute } from 'routes'
+import { NavigateRoute } from '../../routes'
 
 const RouteButton = ({
   navigateRoute,

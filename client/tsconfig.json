@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "./",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -21,13 +21,5 @@
     "downlevelIteration": true,
     "jsxImportSource": "@emotion/react"
   },
-  "include": ["src"],
-  "paths": {
-    "@/*": ["./src/*"]
-    // "@pages/*": ["pages/*"],
-    // "@components/*": ["components/*"],
-    // "@constants/*": ["constants/*"],
-    // "@hooks/*": ["hooks/*"],
-    // "@core/*": ["core/*"]
-  }
+  "include": ["src"]
 }

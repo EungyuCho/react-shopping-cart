@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import colors from 'constants/colors'
+import colors from '../constants/colors'
 import RouteButton from './Button/RouteButton'
 
 const Nav = () => {

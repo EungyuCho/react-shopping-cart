@@ -14,6 +14,11 @@ const db = low(adapter)
 server.use(middlewares)
 
 server.use(jsonServer.bodyParser)
+// page: number
+// per_page: number
+// total: number
+// total_pages: number
+// data: T[]
 
 const PAGE_PER_PRODUCT = 12
 server.get('/products', (req, res) => {
@@ -26,7 +31,17 @@ server.get('/products', (req, res) => {
     .slice(startProduct, startProduct + PAGE_PER_PRODUCT)
     .value()
 
-  res.send(products)
+  const productTotal = db.get('products').value().length
+
+  const response = {
+    page,
+    per_page: PAGE_PER_PRODUCT,
+    total: productTotal,
+    total_pages: Math.ceil(productTotal / PAGE_PER_PRODUCT),
+    data: products,
+  }
+
+  res.send(response)
 })
 server.post('/products', (req, res) => {
   const { price, name, imageUrl } = req.body
