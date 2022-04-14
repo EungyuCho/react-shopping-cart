@@ -1,15 +1,22 @@
 import styled from '@emotion/styled'
 import colors from 'constants/colors'
+import RouteButton from './Button/RouteButton'
 
 const Nav = () => {
   return (
     <NavContainer>
       <NavTitleContainer>
-        <NavTitle>CLEAN CODE SHOP</NavTitle>
+        <RouteButton navigateRoute="productList">
+          <NavTitle>CLEAN CODE SHOP</NavTitle>
+        </RouteButton>
       </NavTitleContainer>
       <NavButtonContainer>
-        <NavButton>장바구나</NavButton>
-        <NavButton>주문목록</NavButton>
+        <RouteButton navigateRoute="cart">
+          <NavButton>장바구나</NavButton>
+        </RouteButton>
+        <RouteButton navigateRoute="orderList">
+          <NavButton>주문목록</NavButton>
+        </RouteButton>
       </NavButtonContainer>
     </NavContainer>
   )
