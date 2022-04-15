@@ -64,7 +64,7 @@ const ProductPageButtonContainer = styled.a<{ clicked: boolean }>`
   height: 38px;
   font-size: 14px;
   border-radius: 0px;
-  margin-left: --1px;
+  margin-left: -1px;
   line-height: 20px;
 
   border: 1px solid ${(props) => (props.clicked ? colors.tomato400 : colors.black100)};

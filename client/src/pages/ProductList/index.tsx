@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import ProductPaging from '../../components/Product/ProductPaging'
 import ProductCardList from '../../components/Product/ProductList'
 import { useListProductQuery } from '../../core/redux/service/product'
@@ -8,14 +8,10 @@ const ProductList = () => {
   const [page, setPage] = useState(1)
   const { data: products, isLoading } = useListProductQuery(page)
 
-  useEffect(() => {
-    console.log('page is changed', page)
-  }, [page])
+  console.log(products)
   if (isLoading) {
     return <div>loading...</div>
   }
-
-  console.log('products', products)
 
   return (
     <div

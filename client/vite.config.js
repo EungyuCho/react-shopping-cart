@@ -13,4 +13,9 @@ export default defineConfig({
     }),
     svgLoader(),
   ],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './setupTests.ts',
+  },
 })
