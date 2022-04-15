@@ -27,7 +27,12 @@ const ProductPaging = ({ currentPage, maxPage, setPage }: ProductPagingProps) =>
   return (
     <ProductPagingContainer>
       {pages.map((page) => (
-        <ProductPageButtonContainer key={'page-' + page} onClick={changeProductPage(page)} clicked={page === currentPage}>
+        <ProductPageButtonContainer
+          key={'page-' + page}
+          onClick={changeProductPage(page)}
+          data-testid={page === currentPage ? 'current-page' : ''}
+          clicked={page === currentPage}
+        >
           {page}
         </ProductPageButtonContainer>
       ))}
@@ -40,7 +45,7 @@ const ProductPaging = ({ currentPage, maxPage, setPage }: ProductPagingProps) =>
   )
 }
 
-interface ProductPagingProps {
+export interface ProductPagingProps {
   maxPage: number
   currentPage: number
   setPage: React.Dispatch<React.SetStateAction<number>>
