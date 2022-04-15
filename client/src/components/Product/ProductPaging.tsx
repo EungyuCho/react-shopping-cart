@@ -2,15 +2,17 @@ import styled from '@emotion/styled'
 import { useCallback, useEffect, useMemo } from 'react'
 import colors from '../../constants/colors'
 
+const MAX_PAGE_PER_SCREEN = 10
 const ProductPaging = ({ currentPage, maxPage, setPage }: ProductPagingProps) => {
-  const { currentLastPage, pages } = useMemo(() => {
-    const currentStartPage = Math.floor(currentPage / 10) * 10 + 1
-    const currentLastPage = Math.min(currentStartPage + 9, maxPage + 1)
+  const { currentStartPage, currentLastPage, pages } = useMemo(() => {
+    const currentStartPage = Math.floor(currentPage / MAX_PAGE_PER_SCREEN) * MAX_PAGE_PER_SCREEN + 1
+    const currentLastPage = Math.min(currentStartPage + MAX_PAGE_PER_SCREEN - 1, maxPage + 1)
     const pages = [...Array(currentLastPage - currentStartPage).keys()].map((page) => page + currentStartPage)
 
-    return { currentLastPage, pages }
+    return { currentLastPage, currentStartPage, pages }
   }, [currentPage])
 
+  const isExistPrevPage = currentStartPage > 1
   const isExistNextPage = currentLastPage < maxPage
 
   const changeProductPage = useCallback(
@@ -26,6 +28,11 @@ const ProductPaging = ({ currentPage, maxPage, setPage }: ProductPagingProps) =>
 
   return (
     <ProductPagingContainer>
+      {isExistPrevPage && (
+        <ProductPageButtonContainer key={'page-next' + (currentStartPage - 1)} clicked={false} onClick={changeProductPage(currentStartPage - 1)}>
+          {'>'}
+        </ProductPageButtonContainer>
+      )}
       {pages.map((page) => (
         <ProductPageButtonContainer
           key={'page-' + page}
