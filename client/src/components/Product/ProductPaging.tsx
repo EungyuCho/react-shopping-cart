@@ -30,7 +30,7 @@ const ProductPaging = ({ currentPage, maxPage, setPage }: ProductPagingProps) =>
     <ProductPagingContainer>
       {isExistPrevPage && (
         <ProductPageButtonContainer key={'page-next' + (currentStartPage - 1)} clicked={false} onClick={changeProductPage(currentStartPage - 1)}>
-          {'>'}
+          {'<'}
         </ProductPageButtonContainer>
       )}
       {pages.map((page) => (

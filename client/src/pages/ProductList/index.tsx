@@ -8,7 +8,6 @@ const ProductList = () => {
   const [page, setPage] = useState(1)
   const { data: products, isLoading } = useListProductQuery(page)
 
-  console.log(products)
   if (isLoading) {
     return <div>loading...</div>
   }
