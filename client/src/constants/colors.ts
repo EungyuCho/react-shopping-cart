@@ -4,6 +4,7 @@ const colors = {
 
   tomato400: '#f45452',
   black300: '#666666',
+  black200: '#bbbbbb',
   black100: '#DDDDDD',
 }
 

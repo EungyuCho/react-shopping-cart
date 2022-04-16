@@ -22,6 +22,10 @@ const getCartItemTotalPrice = createSelector(getCartItems, (cartItems) => {
     .reduce((prev, curr) => prev + curr, 0)
 })
 
-export { getCartLoadingStatus, getCartItems, getCartItemTotalPrice }
+const getCartItemAllChecked = createSelector(getCartItems, (cartItems) => {
+  return cartItems.filter((cartItem) => cartItem.isChecked).length === cartItems.length
+})
+
+export { getCartLoadingStatus, getCartItems, getCartItemTotalPrice, getCartItemAllChecked }
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

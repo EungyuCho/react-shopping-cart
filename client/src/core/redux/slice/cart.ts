@@ -30,7 +30,7 @@ const cartSlice = createSlice({
     getState(state) {
       console.log('[CART DATA] ', state)
     },
-    toggleProduct(state, action: PayloadAction<{ productId: number }>) {
+    toggleProduct(state, action: ProductPayload) {
       const product = state.cartItems.find((product) => product.id === action.payload.productId)
       if (!product) {
         return
@@ -46,6 +46,36 @@ const cartSlice = createSlice({
 
       const product = getProduct(state.cartItems, action.payload.productId)
       product.quantity = action.payload.quantity
+    },
+    increaseProductQuantity(state, action: ProductPayload) {
+      const product = getProduct(state.cartItems, action.payload.productId)
+
+      const quantity = product.quantity + 1
+      if (quantity < CART_PRODUCT_MIN_QUANTITY || quantity > CART_PRODUCT_MAX_QUANTITY) {
+        return
+      }
+
+      product.quantity = quantity
+    },
+    decreaseProductQuantity(state, action: ProductPayload) {
+      const product = getProduct(state.cartItems, action.payload.productId)
+
+      const quantity = product.quantity - 1
+      if (quantity < CART_PRODUCT_MIN_QUANTITY || quantity > CART_PRODUCT_MAX_QUANTITY) {
+        return
+      }
+
+      product.quantity = quantity
+    },
+    changeAllProductChecked(state, action: PayloadAction<{ check: boolean }>) {
+      console.log('??')
+      const newCartItems = state.cartItems.map((cartItem) => ({ ...cartItem, isChecked: action.payload.check }))
+
+      console.log(newCartItems)
+
+      state.cartItems = newCartItems
+
+      console.log(state.cartItems)
     },
   },
   extraReducers: (builder) => {
@@ -83,11 +113,13 @@ const fetchCartList = createAsyncThunk('cart/fetchCartList', async (_, __) => {
   return response.data as Cart[]
 })
 
-export const { getState } = cartSlice.actions
+export const { getState, changeProductQuantity, toggleProduct, increaseProductQuantity, changeAllProductChecked, decreaseProductQuantity } =
+  cartSlice.actions
+
 export { fetchCartList }
 export default cartSlice.reducer
 
-interface CartItem extends Cart {
+export interface CartItem extends Cart {
   quantity: number
   isChecked: boolean
 }
@@ -98,3 +130,5 @@ interface CartState {
   error: null | SerializedError
   currentRequestId: undefined | string
 }
+
+type ProductPayload = PayloadAction<{ productId: number }>
