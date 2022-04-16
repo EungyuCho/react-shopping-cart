@@ -1,14 +1,14 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import ProductPaging from '../../components/Product/ProductPaging'
 import ProductCardList from '../../components/Product/ProductList'
-import { useListProductQuery } from '../../core/redux/service/product'
 import { css } from '@emotion/react'
+import { useProductListQuery } from '../..//core/redux/service/product'
 
 const ProductList = () => {
   const [page, setPage] = useState(1)
-  const { data: products, isLoading } = useListProductQuery(page)
+  const { data: products, isLoading: productIsLoading } = useProductListQuery(page)
 
-  if (isLoading) {
+  if (productIsLoading) {
     return <div>loading...</div>
   }
 

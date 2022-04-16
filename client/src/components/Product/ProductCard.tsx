@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
-import { Product } from 'src/types/dto'
+import { ProductPageProductData } from '../../core/redux/service/product'
 import CartImageUrl from '../../assets/svgs/cart.svg?url'
 
-const ProductCard = ({ product }: { product: Product }) => {
-  const { name, price, imageUrl } = product
+const ProductCard = ({ product }: { product: ProductPageProductData }) => {
+  const { name, price, imageUrl, isCartEntered } = product
 
   return (
     <CardContainer>
@@ -14,9 +14,11 @@ const ProductCard = ({ product }: { product: Product }) => {
           <ProductPrice>{price}</ProductPrice>
         </ProductInfoContainer>
 
-        <CartImageContainer>
-          <CartImage src={CartImageUrl} />
-        </CartImageContainer>
+        {!isCartEntered && (
+          <CartImageContainer>
+            <CartImage src={CartImageUrl} />
+          </CartImageContainer>
+        )}
       </ProductBottomContainer>
     </CardContainer>
   )
