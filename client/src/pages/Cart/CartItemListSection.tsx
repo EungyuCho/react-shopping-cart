@@ -21,7 +21,6 @@ const CartItemListSection = ({ cartItems }: CartItemListSectionProps) => {
 
   const changeAllProductCheck = () => {
     dispatch(changeAllProductChecked({ check: !allCartItemSelected }))
-    console.log('hi')
   }
   return (
     <CartItemListSectionContainer>
@@ -66,7 +65,7 @@ const CartItemListSection = ({ cartItems }: CartItemListSectionProps) => {
                   </button>
                 </div>
               </div>
-              <span className="cart-price">{cartItem.product.price.toLocaleString()}원</span>
+              <span className="cart-price">{(cartItem.product.price * cartItem.quantity).toLocaleString()}원</span>
             </div>
           </CartItemContainer>
           {cartItems.length !== index + 1 && <hr className="divide-line-thin mt-10" />}

@@ -269,6 +269,14 @@
         "price": 4780,
         "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/ff297e50-7d6b-4a87-8509-b387442ff877.jpg"
       }
+    },
+    {
+      "id": 2,
+      "product": {
+        "name": "생새우살 (71/90) 500g 4개",
+        "price": 29000,
+        "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/6b95c66a-c13d-4ccd-9df5-b1af1428a225.jpg"
+      }
     }
   ],
   "orders": [
