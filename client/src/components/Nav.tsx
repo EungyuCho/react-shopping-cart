@@ -1,8 +1,10 @@
 import styled from '@emotion/styled'
+import { useCartListQuery } from '../core/redux/service/cart'
 import colors from '../constants/colors'
 import RouteButton from './Button/RouteButton'
 
 const Nav = () => {
+  const { data: carts, isLoading } = useCartListQuery()
   return (
     <NavContainer>
       <NavTitleContainer>
@@ -12,7 +14,10 @@ const Nav = () => {
       </NavTitleContainer>
       <NavButtonContainer>
         <RouteButton navigateRoute="cart">
-          <NavButton>장바구나</NavButton>
+          <NavButton>
+            장바구니
+            {!isLoading && <span>{carts?.length}</span>}
+          </NavButton>
         </RouteButton>
         <RouteButton navigateRoute="orderList">
           <NavButton>주문목록</NavButton>
@@ -58,4 +63,11 @@ const NavButton = styled.button`
   color: ${colors.white500};
   font-size: 24px;
   font-weight: 500;
+
+  span {
+    margin-left: 4px;
+    padding: 2px 4px;
+    border: 1px solid ${colors.white500};
+    border-radius: 4px;
+  }
 `
