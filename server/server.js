@@ -43,6 +43,7 @@ server.get('/products', (req, res) => {
 
   res.send(response)
 })
+
 server.post('/products', (req, res) => {
   const { price, name, imageUrl } = req.body
 
@@ -58,9 +59,22 @@ server.post('/products', (req, res) => {
   }
 })
 
+server.get('/carts', (req, res) => {
+  const carts = db.get('carts').values()
+
+  res.send(carts)
+})
+
 server.post('/carts', (req, res) => {
   const { product } = req.body
-  const { price, name, imageUrl } = product
+  const { id, price, name, imageUrl } = product
+
+  const carts = db.get('carts').values()
+  const cartIds = [...carts.map((cart) => cart.id)]
+
+  if (cartIds.includes(id)) {
+    res.sendStatus(409)
+  }
 
   if (
     !Number.isInteger(price) ||
@@ -69,7 +83,16 @@ server.post('/carts', (req, res) => {
   ) {
     res.sendStatus(400)
   } else {
-    db.get('carts').push({ id: Date.now(), product }).write()
+    db.get('carts')
+      .push({
+        id: product.id,
+        product: {
+          name: product.name,
+          price: product.price,
+          imageUrl: product.imageUrl,
+        },
+      })
+      .write()
     res.sendStatus(201)
   }
 })

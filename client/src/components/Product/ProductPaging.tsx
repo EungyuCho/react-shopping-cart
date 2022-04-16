@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import colors from '../../constants/colors'
 
 const MAX_PAGE_PER_SCREEN = 10

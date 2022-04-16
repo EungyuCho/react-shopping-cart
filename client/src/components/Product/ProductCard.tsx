@@ -1,9 +1,30 @@
 import styled from '@emotion/styled'
-import { ProductPageProductData } from '../../core/redux/service/product'
+import { productApi, ProductPageProductData } from '../../core/redux/service/product'
 import CartImageUrl from '../../assets/svgs/cart.svg?url'
+import { toast } from 'react-toastify'
+import { useAddCartMutation } from '../../core/redux/service/cart'
 
 const ProductCard = ({ product }: { product: ProductPageProductData }) => {
   const { name, price, imageUrl, isCartEntered } = product
+  const [addCart] = useAddCartMutation()
+
+  const onAddCartItem = () => {
+    console.log('dd?', productApi.util.resetApiState)
+
+    productApi.util.updateQueryData('productList', 1, (productList) => {
+      console.log('dd?', productList)
+      const target = productList.data.find((product) => product.id === product.id)
+
+      console.log(target)
+      if (!target) {
+        return
+      }
+      target.isCartEntered = true
+      console.log(target)
+    })
+    toast(`${product.name} 상품을 카트에 담았어요.`)
+    addCart(product)
+  }
 
   return (
     <CardContainer>
@@ -15,7 +36,7 @@ const ProductCard = ({ product }: { product: ProductPageProductData }) => {
         </ProductInfoContainer>
 
         {!isCartEntered && (
-          <CartImageContainer>
+          <CartImageContainer onClick={onAddCartItem}>
             <CartImage src={CartImageUrl} />
           </CartImageContainer>
         )}
@@ -56,6 +77,8 @@ const CartImageContainer = styled.div`
   display: flex;
   flex-direction: center;
   align-items: center;
+
+  cursor: pointer;
 `
 
 const CartImage = styled.img`
