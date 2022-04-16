@@ -9,18 +9,13 @@ const ProductCard = ({ product }: { product: ProductPageProductData }) => {
   const [addCart] = useAddCartMutation()
 
   const onAddCartItem = () => {
-    console.log('dd?', productApi.util.resetApiState)
-
     productApi.util.updateQueryData('productList', 1, (productList) => {
-      console.log('dd?', productList)
       const target = productList.data.find((product) => product.id === product.id)
 
-      console.log(target)
       if (!target) {
         return
       }
       target.isCartEntered = true
-      console.log(target)
     })
     toast(`${product.name} 상품을 카트에 담았어요.`)
     addCart(product)

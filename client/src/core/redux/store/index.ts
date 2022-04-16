@@ -15,6 +15,13 @@ export const store = configureStore({
 const getCartLoadingStatus = (state: RootState) => state.cart.loading
 const getCartItems = (state: RootState) => state.cart.cartItems
 
-export { getCartLoadingStatus, getCartItems }
+const getCartItemTotalPrice = createSelector(getCartItems, (cartItems) => {
+  return cartItems
+    .filter((cartItem) => cartItem.isChecked)
+    .map((cartItem) => cartItem.quantity * cartItem.product.price)
+    .reduce((prev, curr) => prev + curr, 0)
+})
+
+export { getCartLoadingStatus, getCartItems, getCartItemTotalPrice }
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
