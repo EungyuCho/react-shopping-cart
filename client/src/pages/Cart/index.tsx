@@ -1,13 +1,25 @@
-import { useCartListQuery } from '../../core/redux/service/cart'
-
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCartItems, getCartLoadingStatus } from '../../core/redux/store'
+import { fetchCartList } from '../../core/redux/slice/cart'
 const Cart = () => {
-  const { data: cart, isLoading } = useCartListQuery()
+  const dispatch = useDispatch()
+  const loadingStatus = useSelector(getCartLoadingStatus)
+  const cartItems = useSelector(getCartItems)
 
-  if (isLoading) {
-    return <div>loading...</div>
+  const fetchOneUser = async () => {
+    await dispatch(fetchCartList())
   }
 
-  return <div>카트 페이지입니다.</div>
+  useEffect(() => {
+    fetchOneUser()
+  }, [])
+
+  if (loadingStatus !== 'idle') {
+    return <div>Loading...</div>
+  }
+
+  return <div>{JSON.stringify(cartItems)}</div>
 }
 
 export default Cart

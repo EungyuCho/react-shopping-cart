@@ -1,12 +1,9 @@
-import { Cart, Product } from '../../../types/dto'
+import { Product } from '../../../types/dto'
 import emptySplitApi from './common'
 import { productApi } from './product'
 
 export const cartApi = emptySplitApi.injectEndpoints({
   endpoints: (builder) => ({
-    cartList: builder.query<Cart[], void>({
-      query: () => `carts`,
-    }),
     addCart: builder.mutation<{ status: number }, Product>({
       query: (product) => ({
         url: '/carts',
@@ -30,4 +27,4 @@ export const cartApi = emptySplitApi.injectEndpoints({
   }),
 })
 
-export const { useCartListQuery, useAddCartMutation } = cartApi
+export const { useAddCartMutation } = cartApi
