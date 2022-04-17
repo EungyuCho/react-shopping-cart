@@ -43,7 +43,6 @@ server.get('/products', (req, res) => {
 
   res.send(response)
 })
-
 server.post('/products', (req, res) => {
   const { price, name, imageUrl } = req.body
 
@@ -84,7 +83,6 @@ server.post('/carts', (req, res) => {
   ) {
     res.sendStatus(400)
   } else {
-    db.get('carts')
       .push({
         id: product.id,
         product: {
@@ -120,13 +118,6 @@ server.get('/orders', (req, res) => {
 })
 
 server.post('/orders', (req, res) => {
-  const { orderDetails } = req.body
-
-  for (const orderDetail of orderDetails) {
-    const { quantity, price, name, imageUrl } = orderDetail
-
-    if (
-      !Number.isInteger(quantity) ||
       quantity < 1 ||
       !Number.isInteger(price) ||
       typeof name !== 'string' ||
