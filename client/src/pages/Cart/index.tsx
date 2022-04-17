@@ -11,12 +11,12 @@ const Cart = () => {
   const loadingStatus = useSelector(getCartLoadingStatus)
   const cartItems = useSelector(getCartItems)
 
-  const fetchOneUser = async () => {
+  const fetchCarts = async () => {
     await dispatch(fetchCartList())
   }
 
   useEffect(() => {
-    fetchOneUser()
+    fetchCarts()
   }, [])
 
   if (loadingStatus !== 'idle') {

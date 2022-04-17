@@ -19,8 +19,6 @@ const CartBillSection = () => {
       return
     }
 
-    console.log('dd? 왜 안대냐')
-
     dispatch(submitCartItems())
     navigate('/cartSubmit')
   }

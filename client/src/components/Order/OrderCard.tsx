@@ -1,9 +1,32 @@
+import Modal from 'react-modal'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
+import { useEffect, useState } from 'react'
 import colors from '../../constants/colors'
 import { Order, OrderDetail } from '../../types/dto'
+import { useNavigate } from 'react-router-dom'
+import { useAddCartMutation } from '../../core/redux/service/cart'
+import { useDispatch } from 'react-redux'
+import { fetchCartList } from '../../core/redux/slice/cart'
 
 const OrderCard = ({ order, enableShowDetail = false }: OrderCardProps) => {
+  const [cartModalOpen, setCartmodalOpen] = useState(false)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [addCart] = useAddCartMutation()
+
+  const addCartItem = ({ quantity, ...rest }: OrderDetail) => {
+    addCart({ ...rest })
+  }
+
+  const fetchCartList = async () => {
+    await dispatch(fetchCartList())
+  }
+
+  useEffect(() => {
+    fetchCartList()
+  }, [])
+
   return (
     <div>
       <div
@@ -19,13 +42,80 @@ const OrderCard = ({ order, enableShowDetail = false }: OrderCardProps) => {
         {enableShowDetail && <CartHeaderText>상세보기 {'>'}</CartHeaderText>}
       </div>
       {order.orderDetails.map((orderDetail) => (
-        <OrderDetailCard key={order.id + '-' + orderDetail.id} orderDetail={orderDetail} />
+        <OrderDetailCard
+          key={order.id + '-' + orderDetail.id}
+          orderDetail={orderDetail}
+          setCartmodalOpen={setCartmodalOpen}
+          onCartButtonClick={addCartItem}
+        />
       ))}
+
+      <Modal
+        style={{
+          overlay: {
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(255, 255, 255, 0.75)',
+          },
+          content: {
+            position: 'fixed',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            border: '1px solid #ccc',
+            background: '#fff',
+            overflow: 'auto',
+            WebkitOverflowScrolling: 'touch',
+            borderRadius: '4px',
+            outline: 'none',
+            width: '400px',
+            height: '200px',
+          },
+        }}
+        isOpen={cartModalOpen}
+      >
+        <div className="flex-col">
+          <h3
+            css={css`
+              font-size: 24px;
+              margin: 0;
+            `}
+          >
+            장바구니 이동
+          </h3>
+          <hr className="divide-line-thin" />
+          <span
+            className="mt-30"
+            css={css`
+              font-size: 16px;
+            `}
+          >
+            상품을 카트에 담았어요. 장바구니로 이동할까요?
+          </span>
+          <div className="mt-30 flex flex-center">
+            <ModalButton className="mr-20" onClick={() => setCartmodalOpen(false)}>
+              아니요
+            </ModalButton>
+            <ModalButton
+              isConfirm
+              onClick={() => {
+                setCartmodalOpen(false)
+                navigate('/cart')
+              }}
+            >
+              이동할래요
+            </ModalButton>
+          </div>
+        </div>
+      </Modal>
     </div>
   )
 }
 
-const OrderDetailCard = ({ orderDetail }: { orderDetail: OrderDetail }) => {
+const OrderDetailCard = ({ orderDetail, setCartmodalOpen, onCartButtonClick }: OrderDetailCardProps) => {
   return (
     <div
       css={css`
@@ -62,11 +152,24 @@ const OrderDetailCard = ({ orderDetail }: { orderDetail: OrderDetail }) => {
             height: 47px;
           `}
         >
-          <CartButton>장바구니</CartButton>
+          <CartButton
+            onClick={() => {
+              setCartmodalOpen(true)
+              onCartButtonClick(orderDetail)
+            }}
+          >
+            장바구니
+          </CartButton>
         </div>
       </div>
     </div>
   )
+}
+
+interface OrderDetailCardProps {
+  orderDetail: OrderDetail
+  setCartmodalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  onCartButtonClick: (orderDetail: OrderDetail) => void
 }
 
 interface OrderCardProps {
@@ -92,6 +195,17 @@ const CartButton = styled.button`
   padding: 14px 28px;
   border: none;
   cursor: pointer;
+`
+
+const ModalButton = styled.button<{ isConfirm?: boolean }>`
+  background: ${(props) => (props.isConfirm ? colors.primary : colors.black100)};
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+  width: 150px;
+  height: 60px;
+  padding: 20px;
+  border: none;
 `
 
 export default OrderCard

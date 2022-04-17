@@ -74,6 +74,7 @@ server.post('/carts', (req, res) => {
 
   if (cartIds.includes(id)) {
     res.sendStatus(409)
+    return
   }
 
   if (

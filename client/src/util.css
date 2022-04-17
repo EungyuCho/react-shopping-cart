@@ -157,6 +157,14 @@
   margin-bottom: 20px;
 }
 
+.ml-20 {
+  margin-left: 20px;
+}
+
+.mr-20 {
+  margin-right: 20px;
+}
+
 .mx-10 {
   margin-left: 10px;
   margin-right: 10px;
@@ -270,4 +278,7 @@
   background-color: #2ac1bc;
   opacity: 0.5;
   z-index: -1;
+}
+
+#modal {
 }
