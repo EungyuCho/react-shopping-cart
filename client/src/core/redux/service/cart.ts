@@ -1,6 +1,6 @@
 import { Product } from '../../../types/dto'
 import emptySplitApi from './common'
-import { productApi } from './product'
+import { productEndPoint } from './product'
 
 export const cartApi = emptySplitApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,7 +14,7 @@ export const cartApi = emptySplitApi.injectEndpoints({
         return [{ type: 'Product', id: product.id }, 'Cart']
       },
       onCacheEntryAdded(_) {
-        productApi.util.updateQueryData('productList', undefined, (productList) => {
+        productEndPoint.util.updateQueryData('productList', undefined, (productList) => {
           const targetProduct = productList.data.find((product) => product.id === product.id)
 
           if (!targetProduct) {

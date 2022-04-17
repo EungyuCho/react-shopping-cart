@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { productApi, ProductPageProductData } from '../../core/redux/service/product'
+import { productEndPoint, ProductPageProductData } from '../../core/redux/service/product'
 import CartImageUrl from '../../assets/svgs/cart.svg?url'
 import { toast } from 'react-toastify'
 import { useAddCartMutation } from '../../core/redux/service/cart'
@@ -9,7 +9,7 @@ const ProductCard = ({ product }: { product: ProductPageProductData }) => {
   const [addCart] = useAddCartMutation()
 
   const onAddCartItem = () => {
-    productApi.util.updateQueryData('productList', 1, (productList) => {
+    productEndPoint.util.updateQueryData('productList', 1, (productList) => {
       const target = productList.data.find((product) => product.id === product.id)
 
       if (!target) {

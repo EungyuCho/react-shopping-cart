@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import { ReactElement } from 'react'
 import { AnyAction, configureStore, EnhancedStore, Middleware, Reducer, Store } from '@reduxjs/toolkit'
-import { productApi } from '../redux/service/product'
+import { productEndPoint } from '../redux/service/product'
 import { Provider } from 'react-redux'
 import { act } from '@testing-library/react-hooks'
 import { setupListeners } from '@reduxjs/toolkit/query'
@@ -9,7 +9,7 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 function Wrapper({ children }: { children: ReactElement }) {
   const store = configureStore({
     reducer: {
-      [productApi.reducerPath]: productApi.reducer,
+      [productEndPoint.reducerPath]: productEndPoint.reducer,
     },
   })
 

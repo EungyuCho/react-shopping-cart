@@ -9,7 +9,7 @@ export interface ListResponse<T> {
 
 const emptySplitApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3003' }),
-  tagTypes: ['Product', 'Cart'],
+  tagTypes: ['Product', 'Cart', 'Order'],
   endpoints: () => ({}),
 })
 

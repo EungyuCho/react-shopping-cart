@@ -1,5 +1,12 @@
+import { useOrderListQuery } from '../../core/redux/service/order'
+
 const OrderList = () => {
-  return <div>오더 리스트 페이지입니다.</div>
+  const { data: orders, isLoading } = useOrderListQuery()
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+  return <div>{JSON.stringify(orders)}</div>
 }
 
 export default OrderList

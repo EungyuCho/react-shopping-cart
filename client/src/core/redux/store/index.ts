@@ -1,17 +1,23 @@
 import { configureStore, createSelector } from '@reduxjs/toolkit'
 import { cartApi } from '../service/cart'
-import { productApi } from '../service/product'
+import { productEndPoint } from '../service/product'
+import { orderEndPoint } from '../service/order'
 import cartReducer from '../slice/cart'
 
 export const store = configureStore({
   reducer: {
-    [productApi.reducerPath]: productApi.reducer,
+    [productEndPoint.reducerPath]: productEndPoint.reducer,
+    [orderEndPoint.reducerPath]: orderEndPoint.reducer,
     [cartApi.reducerPath]: cartApi.reducer,
     cart: cartReducer,
+    // order: orderReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(cartApi.middleware),
 })
 
+/**
+ * Cart Reducer
+ */
 const getCartLoadingStatus = (state: RootState) => state.cart.loading
 const getCartItems = (state: RootState) => state.cart.cartItems
 const getCartSubmitItems = (state: RootState) => state.cart.orderSubmitedItems
@@ -30,6 +36,10 @@ const getCartCheckedProductCount = createSelector(getCartItems, (cartItems) => {
 const getCartItemAllChecked = createSelector(getCartItems, (cartItems) => {
   return cartItems.filter((cartItem) => cartItem.isChecked).length === cartItems.length
 })
+
+/**
+ * Order Reducer
+ */
 
 export { getCartLoadingStatus, getCartItems, getCartSubmitItems, getCartItemTotalPrice, getCartCheckedProductCount, getCartItemAllChecked }
 export type RootState = ReturnType<typeof store.getState>

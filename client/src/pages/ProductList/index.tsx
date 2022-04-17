@@ -7,7 +7,6 @@ import { useProductListQuery } from '../..//core/redux/service/product'
 const ProductList = () => {
   const [page, setPage] = useState(1)
   const { data: products, isLoading: productIsLoading } = useProductListQuery(page)
-  useEffect(() => {}, [products])
 
   if (productIsLoading) {
     return <div>loading...</div>

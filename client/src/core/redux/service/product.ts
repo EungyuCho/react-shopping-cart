@@ -4,7 +4,7 @@ import emptySplitApi, { ListResponse } from './common'
 
 export type ProductPageProductData = Product & { isCartEntered: boolean }
 
-export const productApi = emptySplitApi.injectEndpoints({
+export const productEndPoint = emptySplitApi.injectEndpoints({
   endpoints: (builder) => ({
     productList: builder.query<ListResponse<ProductPageProductData>, number | void>({
       async queryFn(page = 1, _queryApi, _extraOptions) {
@@ -34,4 +34,4 @@ export const productApi = emptySplitApi.injectEndpoints({
   }),
 })
 
-export const { useProductListQuery } = productApi
+export const { useProductListQuery } = productEndPoint
