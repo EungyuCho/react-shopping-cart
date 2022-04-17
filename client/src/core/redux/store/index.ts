@@ -10,7 +10,6 @@ export const store = configureStore({
     [orderEndPoint.reducerPath]: orderEndPoint.reducer,
     [cartApi.reducerPath]: cartApi.reducer,
     cart: cartReducer,
-    // order: orderReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(cartApi.middleware),
 })

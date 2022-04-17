@@ -1,31 +1,20 @@
-import Modal from 'react-modal'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { useEffect, useState } from 'react'
-import colors from '../../constants/colors'
-import { Order, OrderDetail } from '../../types/dto'
+import { useState } from 'react'
+import Modal from 'react-modal'
 import { useNavigate } from 'react-router-dom'
+import colors from '../../constants/colors'
 import { useAddCartMutation } from '../../core/redux/service/cart'
-import { useDispatch } from 'react-redux'
-import { fetchCartList } from '../../core/redux/slice/cart'
+import { Order, OrderDetail } from '../../types/dto'
 
 const OrderCard = ({ order, enableShowDetail = false }: OrderCardProps) => {
   const [cartModalOpen, setCartmodalOpen] = useState(false)
-  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [addCart] = useAddCartMutation()
 
   const addCartItem = ({ quantity, ...rest }: OrderDetail) => {
     addCart({ ...rest })
   }
-
-  const fetchCartList = async () => {
-    await dispatch(fetchCartList())
-  }
-
-  useEffect(() => {
-    fetchCartList()
-  }, [])
 
   return (
     <div>
@@ -39,7 +28,7 @@ const OrderCard = ({ order, enableShowDetail = false }: OrderCardProps) => {
         `}
       >
         <CartHeaderText>주문번호: {order.id}</CartHeaderText>
-        {enableShowDetail && <CartHeaderText>상세보기 {'>'}</CartHeaderText>}
+        {enableShowDetail && <CartHeaderText data-testid={'상세보기-버튼'}>상세보기 {'>'}</CartHeaderText>}
       </div>
       {order.orderDetails.map((orderDetail) => (
         <OrderDetailCard
