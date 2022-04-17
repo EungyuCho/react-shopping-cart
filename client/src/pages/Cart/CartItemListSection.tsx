@@ -9,7 +9,8 @@ import {
   increaseProductQuantity,
   toggleProduct,
   changeAllProductChecked,
-  deleteCartItem,
+  deleteCartItems,
+  deleteSelectedCartItems,
 } from '../../core/redux/slice/cart'
 import { cartApi } from '../../core/redux/api'
 
@@ -38,8 +39,12 @@ const CartItemListSection = ({ cartItems }: CartItemListSectionProps) => {
       return
     }
 
-    cartApi.deleteCartItem(cartItem.id)
-    dispatch(deleteCartItem({ productId: cartItem.id }))
+    cartApi.deleteCartItem([cartItem.id])
+    dispatch(deleteCartItems({ productIds: [cartItem.id] }))
+  }
+
+  const onSelectedProductDelete = () => {
+    dispatch(deleteSelectedCartItems())
   }
 
   return (
@@ -51,7 +56,7 @@ const CartItemListSection = ({ cartItems }: CartItemListSectionProps) => {
             선택해제
           </label>
         </div>
-        <DeleteButton>상품삭제</DeleteButton>
+        <DeleteButton onClick={onSelectedProductDelete}>상품삭제</DeleteButton>
       </div>
       <h3
         css={css`

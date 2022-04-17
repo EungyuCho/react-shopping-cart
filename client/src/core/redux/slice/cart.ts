@@ -72,8 +72,21 @@ const cartSlice = createSlice({
 
       state.cartItems = newCartItems
     },
-    deleteCartItem(state, action: ProductIdPayload) {
-      state.cartItems = state.cartItems.filter(({ id }) => id !== action.payload.productId)
+    deleteCartItems(state, action: ProductIdsPayload) {
+      const deleteItemIds = new Set(action.payload.productIds)
+      state.cartItems = state.cartItems.filter(({ id }) => !deleteItemIds.has(id))
+    },
+    deleteSelectedCartItems(state) {
+      const deleteTargetProductIds = state.cartItems.filter((cartItem) => cartItem.isChecked).map((cartItem) => cartItem.id)
+
+      if (!deleteTargetProductIds.length) {
+        return
+      }
+
+      const deleteProductIdSet = new Set(deleteTargetProductIds)
+      state.cartItems = state.cartItems.filter((cartItem) => !deleteProductIdSet.has(cartItem.id))
+
+      cartApi.deleteCartItem(deleteTargetProductIds)
     },
   },
   extraReducers: (builder) => {
@@ -118,7 +131,8 @@ export const {
   increaseProductQuantity,
   changeAllProductChecked,
   decreaseProductQuantity,
-  deleteCartItem,
+  deleteCartItems,
+  deleteSelectedCartItems,
 } = cartSlice.actions
 
 export { fetchCartList }
@@ -137,3 +151,4 @@ interface CartState {
 }
 
 type ProductIdPayload = PayloadAction<{ productId: number }>
+type ProductIdsPayload = PayloadAction<{ productIds: number[] }>

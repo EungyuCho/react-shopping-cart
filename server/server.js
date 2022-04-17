@@ -98,9 +98,17 @@ server.post('/carts', (req, res) => {
 })
 
 server.delete('/carts', (req, res) => {
-  const { productId } = req.body
+  const { productIds } = req.body
 
-  db.get('carts').remove({ id: productId }).write()
+  const removeCartItems = () => {
+    productIds.forEach((id) => {
+      db.get('carts').remove({ id }).write()
+    })
+
+    console.log('delete Item Ids: ', productIds)
+  }
+
+  removeCartItems(db.get('carts'))
 
   res.sendStatus(200)
 })
