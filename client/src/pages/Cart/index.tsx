@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCartItems, getCartLoadingStatus } from '../../core/redux/store'
 import { fetchCartList } from '../../core/redux/slice/cart'
 import styled from '@emotion/styled'
-import CartHeader from './CartHeader'
+import PageHeader from '../../components/Header/PageHeader'
 import CartBillSection from './CartBillSection'
 import CartItemListSection from './CartItemListSection'
 const Cart = () => {
@@ -25,7 +25,7 @@ const Cart = () => {
 
   return (
     <CartSection>
-      <CartHeader />
+      <PageHeader title="장바구니" />
       <div className="detail-container">
         <CartItemListSection cartItems={cartItems} />
         <CartBillSection />
@@ -36,14 +36,6 @@ const Cart = () => {
 
 const CartSection = styled.section`
   padding: 24px 300px;
-
-  header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
 
   .detail-container {
     display: flex;

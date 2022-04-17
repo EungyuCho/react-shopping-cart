@@ -1,13 +1,13 @@
 import styled from '@emotion/styled'
 
-const CartHeader = () => (
-  <CartHeaderContainer>
-    <h2>장바구니</h2>
+const PageHeader = ({ title }: { title: string }) => (
+  <PageHeaderContainer>
+    <h2>{title}</h2>
     <hr />
-  </CartHeaderContainer>
+  </PageHeaderContainer>
 )
 
-const CartHeaderContainer = styled.header`
+const PageHeaderContainer = styled.header`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,4 +26,4 @@ const CartHeaderContainer = styled.header`
   }
 `
 
-export default CartHeader
+export default PageHeader
