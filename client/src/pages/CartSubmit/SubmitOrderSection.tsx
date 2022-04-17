@@ -1,28 +1,29 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
-import { submitCartItems } from '../../core/redux/slice/cart'
-import colors from '../../constants/colors'
-import { getCartCheckedProductCount, getCartItemTotalPrice, getCartSubmitItems } from '../../core/redux/store'
 import { useNavigate } from 'react-router-dom'
+import colors from '../../constants/colors'
+import { submitCartItems } from '../../core/redux/slice/cart'
+import { getCartSubmitItems } from '../../core/redux/store'
 
 const SubmitOrderSection = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const submitItems = useSelector(getCartSubmitItems)
-  const selectedCartItemLength = useSelector(getCartCheckedProductCount)
+  const totalPrice = submitItems
+    .map((item) => item.quantity * item.product.price)
+    .reduce((prev, cur) => prev + cur, 0)
+    .toLocaleString()
 
   const onSubmitCartItems = () => {
-    const submitCartItemsConfirmed = confirm(selectedCartItemLength + '개의 상품을 주문할까요?')
+    const orderSubmitConfirmed = confirm('이대로 주문할까요?')
 
-    if (!submitCartItemsConfirmed) {
+    if (!orderSubmitConfirmed) {
       return
     }
 
-    console.log('dd? 왜 안대냐')
-
     dispatch(submitCartItems())
-    navigate('/cartSubmit')
+    navigate('/orders')
   }
 
   return (
@@ -49,17 +50,11 @@ const SubmitOrderSection = () => {
       <div>
         <div className="flex justify-between p-20 mt-20">
           <span className="highlight-text">총 결제금액</span>
-          <span className="highlight-text">
-            {submitItems
-              .map((item) => item.quantity * item.product.price)
-              .reduce((prev, cur) => prev + cur, 0)
-              .toLocaleString()}
-            원
-          </span>
+          <span className="highlight-text">{totalPrice}원</span>
         </div>
         <div className="flex-center mt-30 mx-10">
           <SubmitOrderButton className="flex-center" onClick={onSubmitCartItems}>
-            주문하기({submitItems.length}개)
+            {totalPrice}원 결제하기
           </SubmitOrderButton>
         </div>
       </div>

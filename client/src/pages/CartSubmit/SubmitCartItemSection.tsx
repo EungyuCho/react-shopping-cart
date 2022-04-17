@@ -20,7 +20,7 @@ const SubmitCartItemSection = () => {
 
       {submitItems.map((submitItem) => (
         <div key={'submitItem-' + submitItem.id}>
-          <CartItemContainer>
+          <SubmitCartItemContainer>
             <div className="flex gap-15 mt-10">
               <img
                 css={css`
@@ -52,7 +52,7 @@ const SubmitCartItemSection = () => {
                 </span>
               </div>
             </div>
-          </CartItemContainer>
+          </SubmitCartItemContainer>
         </div>
       ))}
     </SubmitCartItemSectionContainer>
@@ -62,15 +62,9 @@ const SubmitCartItemSectionContainer = styled.section`
   width: 60%;
 `
 
-const CartItemContainer = styled.div`
+const SubmitCartItemContainer = styled.div`
   display: flex;
   justify-content: space-between;
-`
-
-const DeleteButton = styled.button`
-  padding: 12px 22px;
-  border: 1px solid #bbbbbb;
-  cursor: pointer;
 `
 
 export default SubmitCartItemSection
