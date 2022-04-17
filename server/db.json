@@ -253,24 +253,7 @@
       "price": 3300
     }
   ],
-  "carts": [
-    {
-      "id": 3,
-      "product": {
-        "name": "펩시 콜라 355ml 24캔",
-        "price": 83700,
-        "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/84fc0238-0239-4d0e-870b-a9daa6f2c42c.jpg"
-      }
-    },
-    {
-      "id": 4,
-      "product": {
-        "name": "리치스 스위트콘 대 2.95kg",
-        "price": 4780,
-        "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/ff297e50-7d6b-4a87-8509-b387442ff877.jpg"
-      }
-    }
-  ],
+  "carts": [],
   "orders": [
     {
       "id": 1,
