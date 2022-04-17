@@ -30,7 +30,7 @@ const cartSlice = createSlice({
     getState(state) {
       console.log('[CART DATA] ', state)
     },
-    toggleProduct(state, action: ProductPayload) {
+    toggleProduct(state, action: ProductIdPayload) {
       const product = state.cartItems.find((product) => product.id === action.payload.productId)
       if (!product) {
         return
@@ -47,7 +47,7 @@ const cartSlice = createSlice({
       const product = getProduct(state.cartItems, action.payload.productId)
       product.quantity = action.payload.quantity
     },
-    increaseProductQuantity(state, action: ProductPayload) {
+    increaseProductQuantity(state, action: ProductIdPayload) {
       const product = getProduct(state.cartItems, action.payload.productId)
 
       const quantity = product.quantity + 1
@@ -57,7 +57,7 @@ const cartSlice = createSlice({
 
       product.quantity = quantity
     },
-    decreaseProductQuantity(state, action: ProductPayload) {
+    decreaseProductQuantity(state, action: ProductIdPayload) {
       const product = getProduct(state.cartItems, action.payload.productId)
 
       const quantity = product.quantity - 1
@@ -68,14 +68,12 @@ const cartSlice = createSlice({
       product.quantity = quantity
     },
     changeAllProductChecked(state, action: PayloadAction<{ check: boolean }>) {
-      console.log('??')
       const newCartItems = state.cartItems.map((cartItem) => ({ ...cartItem, isChecked: action.payload.check }))
 
-      console.log(newCartItems)
-
       state.cartItems = newCartItems
-
-      console.log(state.cartItems)
+    },
+    deleteCartItem(state, action: ProductIdPayload) {
+      state.cartItems = state.cartItems.filter(({ id }) => id !== action.payload.productId)
     },
   },
   extraReducers: (builder) => {
@@ -113,8 +111,15 @@ const fetchCartList = createAsyncThunk('cart/fetchCartList', async (_, __) => {
   return response.data as Cart[]
 })
 
-export const { getState, changeProductQuantity, toggleProduct, increaseProductQuantity, changeAllProductChecked, decreaseProductQuantity } =
-  cartSlice.actions
+export const {
+  getState,
+  changeProductQuantity,
+  toggleProduct,
+  increaseProductQuantity,
+  changeAllProductChecked,
+  decreaseProductQuantity,
+  deleteCartItem,
+} = cartSlice.actions
 
 export { fetchCartList }
 export default cartSlice.reducer
@@ -131,4 +136,4 @@ interface CartState {
   currentRequestId: undefined | string
 }
 
-type ProductPayload = PayloadAction<{ productId: number }>
+type ProductIdPayload = PayloadAction<{ productId: number }>

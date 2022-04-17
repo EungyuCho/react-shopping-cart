@@ -3,7 +3,15 @@ import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCartItemAllChecked } from '../../core/redux/store'
 import TrashImageUrl from '../../assets/svgs/trash.svg?url'
-import { CartItem, decreaseProductQuantity, increaseProductQuantity, toggleProduct, changeAllProductChecked } from '../../core/redux/slice/cart'
+import {
+  CartItem,
+  decreaseProductQuantity,
+  increaseProductQuantity,
+  toggleProduct,
+  changeAllProductChecked,
+  deleteCartItem,
+} from '../../core/redux/slice/cart'
+import { cartApi } from '../../core/redux/api'
 
 const CartItemListSection = ({ cartItems }: CartItemListSectionProps) => {
   const allCartItemSelected = useSelector(getCartItemAllChecked)
@@ -22,6 +30,18 @@ const CartItemListSection = ({ cartItems }: CartItemListSectionProps) => {
   const changeAllProductCheck = () => {
     dispatch(changeAllProductChecked({ check: !allCartItemSelected }))
   }
+
+  const onProductDelete = (cartItem: CartItem) => () => {
+    const isDeleteProductConfirmed = confirm(cartItem.product.name + ' 상품을 장바구니에서 삭제할까요?')
+
+    if (!isDeleteProductConfirmed) {
+      return
+    }
+
+    cartApi.deleteCartItem(cartItem.id)
+    dispatch(deleteCartItem({ productId: cartItem.id }))
+  }
+
   return (
     <CartItemListSectionContainer>
       <div className="flex justify-between items-center mt-20">
@@ -53,7 +73,15 @@ const CartItemListSection = ({ cartItems }: CartItemListSectionProps) => {
               <span className="cart-name">{cartItem.product.name}</span>
             </div>
             <div className="flex-col-center justify-end gap-15">
-              <img className="cart-trash-svg" src={TrashImageUrl} alt="삭제" />
+              <img
+                className="cart-trash-svg"
+                css={css`
+                  cursor: pointer;
+                `}
+                onClick={onProductDelete(cartItem)}
+                src={TrashImageUrl}
+                alt="삭제"
+              />
               <div className="number-input-container">
                 <input type="number" className="number-input" value={cartItem.quantity} readOnly />
                 <div>

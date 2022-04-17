@@ -97,6 +97,14 @@ server.post('/carts', (req, res) => {
   }
 })
 
+server.delete('/carts', (req, res) => {
+  const { productId } = req.body
+
+  db.get('carts').remove({ id: productId }).write()
+
+  res.sendStatus(200)
+})
+
 server.post('/orders', (req, res) => {
   const { orderDetails } = req.body
 

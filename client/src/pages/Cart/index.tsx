@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCartItems, getCartLoadingStatus } from '../../core/redux/store'
 import { fetchCartList } from '../../core/redux/slice/cart'
 import styled from '@emotion/styled'
-import { css } from '@emotion/react'
 import CartHeader from './CartHeader'
-import colors from '../../constants/colors'
 import CartBillSection from './CartBillSection'
 import CartItemListSection from './CartItemListSection'
 const Cart = () => {
@@ -50,11 +48,6 @@ const CartSection = styled.section`
   .detail-container {
     display: flex;
   }
-`
-
-const CartItemContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
 `
 
 export default Cart
