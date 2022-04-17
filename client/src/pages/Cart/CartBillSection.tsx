@@ -35,7 +35,9 @@ const CartBillSection = () => {
           <span className="highlight-text">{totalPrice.toLocaleString()}원</span>
         </div>
         <div className="flex-center mt-30 mx-10">
-          <SubmitOrderButton className="flex-center">주문하기({selectedCartItemLength}개)</SubmitOrderButton>
+          <SubmitOrderButton disabled={selectedCartItemLength === 0} className="flex-center">
+            주문하기({selectedCartItemLength}개)
+          </SubmitOrderButton>
         </div>
       </div>
     </CartBillSectionContainer>
@@ -48,6 +50,10 @@ const SubmitOrderButton = styled.button`
   width: 100%;
   padding: 20px;
   border: none;
+
+  &:disabled {
+    background-color: ${colors.black100};
+  }
 `
 
 const CartBillSectionContainer = styled.section`
