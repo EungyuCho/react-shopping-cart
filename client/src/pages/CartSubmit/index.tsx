@@ -5,13 +5,6 @@ import SubmitOrderSection from './SubmitOrderSection'
 
 const CartSubmit = () => {
   return (
-    // <div
-    //   css={css`
-    //     padding: 50px 240px;
-    //   `}
-    // >
-    //   {JSON.stringify(submitItems)}
-    // </div>
     <SubmitSection>
       <PageHeader title="주문/결제" />
       <div className="detail-container">

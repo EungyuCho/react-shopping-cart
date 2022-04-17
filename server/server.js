@@ -113,6 +113,11 @@ server.delete('/carts', (req, res) => {
   res.sendStatus(200)
 })
 
+server.get('/orders', (req, res) => {
+  const orders = db.get('orders').values()
+  res.send(orders)
+})
+
 server.post('/orders', (req, res) => {
   const { orderDetails } = req.body
 

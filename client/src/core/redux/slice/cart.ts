@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit'
 import { WritableDraft } from 'immer/dist/internal'
-import { Cart } from 'src/types/dto'
-import { cartApi } from '../api'
+import { Cart, OrderDetail, PostOrderDetail } from 'src/types/dto'
+import { cartApi, orderApi } from '../api'
 
 const [CART_PRODUCT_MIN_QUANTITY, CART_PRODUCT_MAX_QUANTITY] = [1, 20]
 
@@ -92,7 +92,6 @@ const cartSlice = createSlice({
 
     submitCartItems(state) {
       const submitTargetCartItems = state.cartItems.filter((cartItem) => cartItem.isChecked)
-      console.log('submitTargetCartItems', submitTargetCartItems)
 
       if (!submitTargetCartItems.length) {
         return
@@ -105,6 +104,25 @@ const cartSlice = createSlice({
       state.orderSubmitedItems = submitTargetCartItems
 
       cartApi.deleteCartItem(deleteTargetProductIds)
+    },
+    submitOrder(state) {
+      const items = state.orderSubmitedItems
+
+      if (!items.length) {
+        return
+      }
+
+      const orderDetails: OrderDetail[] = items.map(({ id, product, quantity }) => ({
+        id,
+        imageUrl: product.imageUrl,
+        name: product.name,
+        price: product.price,
+        quantity,
+      }))
+
+      orderApi.addOrder({ orderDetails })
+
+      state.orderSubmitedItems = []
     },
   },
   extraReducers: (builder) => {
@@ -152,6 +170,7 @@ export const {
   deleteCartItems,
   deleteSelectedCartItems,
   submitCartItems,
+  submitOrder,
 } = cartSlice.actions
 
 export { fetchCartList }

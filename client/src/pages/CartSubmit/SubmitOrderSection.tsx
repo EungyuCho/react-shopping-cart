@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import colors from '../../constants/colors'
-import { submitCartItems } from '../../core/redux/slice/cart'
+import { submitOrder } from '../../core/redux/slice/cart'
 import { getCartSubmitItems } from '../../core/redux/store'
 
 const SubmitOrderSection = () => {
@@ -22,8 +22,8 @@ const SubmitOrderSection = () => {
       return
     }
 
-    dispatch(submitCartItems())
-    navigate('/orders')
+    dispatch(submitOrder())
+    navigate('/orderList')
   }
 
   return (
