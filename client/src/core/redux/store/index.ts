@@ -14,6 +14,7 @@ export const store = configureStore({
 
 const getCartLoadingStatus = (state: RootState) => state.cart.loading
 const getCartItems = (state: RootState) => state.cart.cartItems
+const getCartSubmitItems = (state: RootState) => state.cart.orderSubmitedItems
 
 const getCartItemTotalPrice = createSelector(getCartItems, (cartItems) => {
   return cartItems
@@ -30,6 +31,6 @@ const getCartItemAllChecked = createSelector(getCartItems, (cartItems) => {
   return cartItems.filter((cartItem) => cartItem.isChecked).length === cartItems.length
 })
 
-export { getCartLoadingStatus, getCartItems, getCartItemTotalPrice, getCartCheckedProductCount, getCartItemAllChecked }
+export { getCartLoadingStatus, getCartItems, getCartSubmitItems, getCartItemTotalPrice, getCartCheckedProductCount, getCartItemAllChecked }
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

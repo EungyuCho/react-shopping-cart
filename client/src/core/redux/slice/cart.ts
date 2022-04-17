@@ -7,6 +7,7 @@ const [CART_PRODUCT_MIN_QUANTITY, CART_PRODUCT_MAX_QUANTITY] = [1, 20]
 
 const initialState = {
   cartItems: [],
+  orderSubmitedItems: [],
   currentRequestId: undefined,
   error: null,
   loading: 'idle',
@@ -88,6 +89,23 @@ const cartSlice = createSlice({
 
       cartApi.deleteCartItem(deleteTargetProductIds)
     },
+
+    submitCartItems(state) {
+      const submitTargetCartItems = state.cartItems.filter((cartItem) => cartItem.isChecked)
+      console.log('submitTargetCartItems', submitTargetCartItems)
+
+      if (!submitTargetCartItems.length) {
+        return
+      }
+
+      const deleteTargetProductIds = submitTargetCartItems.map((cartItem) => cartItem.id)
+
+      const deleteProductIdSet = new Set(deleteTargetProductIds)
+      state.cartItems = state.cartItems.filter((cartItem) => !deleteProductIdSet.has(cartItem.id))
+      state.orderSubmitedItems = submitTargetCartItems
+
+      cartApi.deleteCartItem(deleteTargetProductIds)
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -133,6 +151,7 @@ export const {
   decreaseProductQuantity,
   deleteCartItems,
   deleteSelectedCartItems,
+  submitCartItems,
 } = cartSlice.actions
 
 export { fetchCartList }
@@ -144,6 +163,7 @@ export interface CartItem extends Cart {
 }
 
 interface CartState {
+  orderSubmitedItems: CartItem[]
   cartItems: CartItem[]
   loading: 'idle' | 'pending' | 'succeeded' | 'failed'
   error: null | SerializedError

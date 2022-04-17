@@ -1,12 +1,29 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { submitCartItems } from '../../core/redux/slice/cart'
 import colors from '../../constants/colors'
 import { getCartCheckedProductCount, getCartItemTotalPrice } from '../../core/redux/store'
+import { useNavigate } from 'react-router-dom'
 
 const CartBillSection = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const totalPrice = useSelector(getCartItemTotalPrice)
   const selectedCartItemLength = useSelector(getCartCheckedProductCount)
+
+  const onSubmitCartItems = () => {
+    const submitCartItemsConfirmed = confirm(selectedCartItemLength + '개의 상품을 주문할까요?')
+
+    if (!submitCartItemsConfirmed) {
+      return
+    }
+
+    console.log('dd? 왜 안대냐')
+
+    dispatch(submitCartItems())
+    navigate('/cartSubmit')
+  }
 
   return (
     <CartBillSectionContainer>
@@ -35,7 +52,7 @@ const CartBillSection = () => {
           <span className="highlight-text">{totalPrice.toLocaleString()}원</span>
         </div>
         <div className="flex-center mt-30 mx-10">
-          <SubmitOrderButton disabled={selectedCartItemLength === 0} className="flex-center">
+          <SubmitOrderButton className="flex-center" disabled={selectedCartItemLength === 0} onClick={onSubmitCartItems}>
             주문하기({selectedCartItemLength}개)
           </SubmitOrderButton>
         </div>
