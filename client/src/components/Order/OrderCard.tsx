@@ -135,7 +135,7 @@ const OrderDetailCard = ({ orderDetail, setCartmodalOpen, onCartButtonClick }: O
                 color: ${colors.black400};
               `}
             >
-              {orderDetail.price} / 수량: {orderDetail.quantity}개
+              {orderDetail.price.toLocaleString()}원 / 수량: {orderDetail.quantity}개
             </span>
           </div>
         </div>
