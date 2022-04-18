@@ -1,10 +1,15 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import colors from '../../constants/colors'
 import { useProductDetailQuery } from '../../core/redux/service/product'
+import { useAddCartMutation } from '../../core/redux/service/cart'
 
 const ProductDetail = () => {
   let [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const [addCart] = useAddCartMutation()
+
   const { data: product, isLoading } = useProductDetailQuery(Number(searchParams.get('productId')))
 
   if (isLoading) {
@@ -76,7 +81,14 @@ const ProductDetail = () => {
               {product.price.toLocaleString()}원
             </span>
           </div>
-          <CartButton>장바구니</CartButton>
+          <CartButton
+            onClick={() => {
+              addCart(product)
+              navigate('/cart')
+            }}
+          >
+            장바구니
+          </CartButton>
         </div>
       </div>
     </div>
@@ -84,13 +96,14 @@ const ProductDetail = () => {
 }
 
 const CartButton = styled.button`
-  background: #2ac1bc;
+  background: ${colors.primary};
   font-size: 24px;
   color: white;
   width: 100%;
   padding: 20px 0;
   margin-top: 57px;
   border: none;
+  cursor: pointer;
 `
 
 export default ProductDetail
