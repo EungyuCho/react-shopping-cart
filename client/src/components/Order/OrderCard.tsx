@@ -28,7 +28,11 @@ const OrderCard = ({ order, enableShowDetail = false }: OrderCardProps) => {
         `}
       >
         <CartHeaderText>주문번호: {order.id}</CartHeaderText>
-        {enableShowDetail && <CartHeaderText data-testid={'상세보기-버튼'}>상세보기 {'>'}</CartHeaderText>}
+        {enableShowDetail && (
+          <CartHeaderText data-testid={'상세보기-버튼'} onClick={() => navigate('/orderDetail?orderId=' + order.id)}>
+            상세보기 {'>'}
+          </CartHeaderText>
+        )}
       </div>
       {order.orderDetails.map((orderDetail) => (
         <OrderDetailCard

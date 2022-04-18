@@ -83,6 +83,7 @@ server.post('/carts', (req, res) => {
   ) {
     res.sendStatus(400)
   } else {
+    db.get('carts')
       .push({
         id: product.id,
         product: {
@@ -117,7 +118,30 @@ server.get('/orders', (req, res) => {
   res.send(orders)
 })
 
+server.get('/order', (req, res) => {
+  const orderId = Number(req.query.orderId)
+
+  console.log(orderId)
+  if (!orderId) {
+    res.sendStatus(404)
+    return
+  }
+
+  const order = db
+    .get('orders')
+    .find((order) => order.id === orderId)
+    .value()
+  res.send(order)
+})
+
 server.post('/orders', (req, res) => {
+  const { orderDetails } = req.body
+
+  for (const orderDetail of orderDetails) {
+    const { quantity, price, name, imageUrl } = orderDetail
+
+    if (
+      !Number.isInteger(quantity) ||
       quantity < 1 ||
       !Number.isInteger(price) ||
       typeof name !== 'string' ||
