@@ -43,6 +43,23 @@ server.get('/products', (req, res) => {
 
   res.send(response)
 })
+
+server.get('/product', (req, res) => {
+  const productId = Number(req.query.productId)
+
+  if (!productId) {
+    res.sendStatus(404)
+    return
+  }
+
+  const product = db
+    .get('products')
+    .find((product) => product.id === productId)
+    .value()
+
+  res.send(product)
+})
+
 server.post('/products', (req, res) => {
   const { price, name, imageUrl } = req.body
 

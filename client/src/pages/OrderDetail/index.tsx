@@ -8,7 +8,6 @@ const OrderDetail = () => {
   let [searchParams] = useSearchParams()
   const { data: order, isLoading } = useOrderDetailQuery(Number(searchParams.get('orderId')))
 
-  console.log('ddd', order)
   if (isLoading) {
     return <div>loading...</div>
   }
